@@ -1,0 +1,9 @@
+const  mangusto  =  requer ( 'mangusto' )
+
+const  Pessoa  =  mangusto . modelo ( 'Pessoa' ,  {
+  nome : Corda ,
+  salário : Número ,
+  aprovado : Booleano ,
+} )
+
+módulo . exporta  =  Pessoa
