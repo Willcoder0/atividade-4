@@ -1,0 +1,117 @@
+const  expresso  =  requer ( 'expresso' )
+ aplicativo  const =  expresso ( )
+
+const  mangusto  =  requer ( 'mangusto' )
+const  Pessoa  =  requer  ( './models/Pessoa' )
+
+app . usar (
+    expresso . urlencoded ( {
+        estendido : verdadeiro ,
+    } ) ,
+)
+
+app . use ( express . json ( ) )
+
+// rotas
+app . post ( '/pessoa' ,  assíncrono  ( req ,  res )  =>  {
+    const  { nome , salario , aprovado }  =  req . corpo
+
+     pessoa  constante =  {
+        nome ,
+        salário ,
+        aprovado ,
+    }
+
+    tente  {
+        aguardo  Pessoa . criar ( pessoa )
+        
+        res . estado ( 201 ) . json ( {  message : 'Pessoa inserida no sistema com sucesso! ' } )
+    }  pegar  ( erro )  {
+        res . estado ( 500 ) . json ( {  erro : erro } )
+    }
+} )
+
+app . get ( './pessoa' ,  async  ( req ,  res )  =>  {
+    tente  {
+        const  pessoas  =  aguardo  Pessoa . encontrar ( )
+
+        res . estado ( 200 ) . json ( pessoas )
+    }  pegar  ( erro )  {
+        res . estado ( 500 ) . json ( {  erro : erro } )
+    }
+} )
+
+app . get ( './pessoa/:id' ,  async  ( req ,  res )  =>  {
+    const  id  =  req . parâmetros . eu ia
+
+    tente  {
+        const  pessoa  =  espera  Pessoa . encontreUm ( {  _id : id  } )
+
+        if  ( ! pessoa )  {
+            res . estado ( 422 ) . json ( {  mensagem : 'Usuário não encontrado! ' } )
+            retornar
+        }
+
+        res . estado ( 200 ) . json ( pessoa )
+    }  pegar  ( erro )  {
+        res . estado ( 500 ) . json ( {  erro : erro } )
+    }
+} )
+
+app . patch ( '/pessoa/:id' ,  async  ( req ,  res )  =>  {
+    const  id  =  req . parâmetros . eu ia
+  
+    const  { nome , salario , aprovado }  =  req . corpo
+  
+     pessoa  constante =  {
+      nome ,
+      salário ,
+      aprovado ,
+    }
+  
+    tente  {
+      const  updatedPerson  =  await  Person . updateOne ( {  _id : id  } ,  pessoa )
+  
+      if  ( pessoa atualizada . matchedCount  ===  0 )  {
+        res . estado ( 422 ) . json ( {  mensagem : 'Usuário não encontrado!'  } )
+        retornar
+      }
+  
+      res . estado ( 200 ) . json ( pessoa )
+    }  pegar  ( erro )  {
+      res . estado ( 500 ) . json ( {  erro : erro  } )
+    }
+} )
+
+app . delete ( '/pessoa/:id' ,  async  ( req ,  res )  =>  {
+    const  id  =  req . parâmetros . eu ia
+
+    const  pessoa  =  espera  Pessoa . encontreUm ( {  _id : id  } )
+
+    if  ( ! pessoa )  {
+        res . estado ( 422 ) . json ( {  mensagem : 'Usuário não encontrado!'  } )
+        retornar
+    }
+
+    tente  {
+        aguardo  Pessoa . deleteOne ( {  _id : id  } )
+
+        res . estado ( 200 ) . json ( {  message : 'Usuário removido com sucesso!'  } )
+    }  pegar  ( erro )  {
+        res . estado ( 500 ) . json ( {  erro : erro } )
+    }
+} )
+
+app . get ( '/' ,  ( req ,  res )  =>  {
+    res . json ( {  mensagem : 'Oi Express! ' } )
+} )
+
+mangusto
+    . conectar (
+        'mongodb+srv://user:password@restfulapibanco.lq7ds.mongodb.net/myFirstDatabase?retryWrites=true&w=majority' ,
+    )
+    . então ( ( )  =>  {
+        console . log ( 'Conectou ao banco!' )
+        app . ouvir
+    } )
+. catch ( ( err )  =>  console . log ( err ) )
