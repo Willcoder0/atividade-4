@@ -1,0 +1,17 @@
+{
+  "nome" : " crud " ,
+  "versão" : " 1.0.0 " ,
+  "descrição" : " " ,
+  "principal" : " index.js " ,
+  "scripts" : {
+    "start" : " nodemon ./index.js localhost 3000 "
+  },
+  "palavras-chave" : [],
+  "autor" : " " ,
+  "licença" : " MIT " ,
+  "dependências" : {
+    "expresso" : " ^4.17.1 " ,
+    "mangusto" : " ^6.0.7 " ,
+    "nodemon" : " ^2.0.13 "
+  }
+}
